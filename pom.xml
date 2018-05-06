@@ -13,6 +13,7 @@
     <modules>
         <module>util</module>
         <module>chapter1</module>
+        <module>echo</module>
         <module>chapter4</module>
         <module>chapter5</module>
         <module>Chapter6</module>
@@ -20,6 +21,7 @@
         <module>chapter8</module>
         <module>chapter10</module>
         <module>chapter11</module>
+
     </modules>
 
     <properties>
