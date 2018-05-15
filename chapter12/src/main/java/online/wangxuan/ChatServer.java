@@ -17,11 +17,13 @@ import java.net.InetSocketAddress;
 
 public class ChatServer {
 
+    // 创建DefaultChannelGroup,其将保存所有已经连接的WebSocket Channel
     private final ChannelGroup channelGroup =
             new DefaultChannelGroup(ImmediateEventExecutor.INSTANCE);
     private final EventLoopGroup group = new NioEventLoopGroup();
     private Channel channel;
 
+    // 引导服务器
     public ChannelFuture start(InetSocketAddress address) {
         ServerBootstrap bootstrap = new ServerBootstrap();
         bootstrap.group(group).channel(NioServerSocketChannel.class)
@@ -33,10 +35,12 @@ public class ChatServer {
         return future;
     }
 
-    private ChannelHandler createInitializer(ChannelGroup group) {
+    // 创建ChatServerInitializer
+    public ChannelHandler createInitializer(ChannelGroup group) {
         return new ChatServerInitializer(group);
     }
 
+    // 处理服务器关闭，并释放所有的资源
     public void destroy() {
         if (channel != null) {
             channel.close();
@@ -45,7 +49,7 @@ public class ChatServer {
         group.shutdownGracefully();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         if (args.length != 1) {
             System.err.println("Please give port as argument");
             System.exit(1);
